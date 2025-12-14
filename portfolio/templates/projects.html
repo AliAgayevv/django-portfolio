@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block title %}Proyektlər - Əli Portfolio{% endblock %}
+
+{% block extra_css %}
+<style>
+    .projects-section {
+        padding: 5rem 0;
+        background-color: #f8f9fa;
+    }
+    
+    .section-title {
+        text-align: center;
+        margin-bottom: 4rem;
+        font-size: 3rem;
+        color: var(--primary-color);
+    }
+    
+    .project-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        margin-bottom: 2rem;
+        height: 100%;
+    }
+    
+    .project-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    }
+    
+    .project-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+    }
+    
+    .project-content {
+        padding: 2rem;
+    }
+    
+    .project-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+    }
+    
+    .project-description {
+        color: #666;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+    
+    .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .tech-badge {
+        background-color: #e3f2fd;
+        color: #1976d2;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+    
+    .project-links {
+        display: flex;
+        gap: 1rem;
+    }
+    
+    .project-link {
+        flex: 1;
+        text-align: center;
+        padding: 10px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .view-details {
+        background-color: var(--secondary-color);
+        color: white;
+    }
+    
+    .view-details:hover {
+        background-color: #2980b9;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="projects-section">
+    <div class="container">
+        <h1 class="section-title" data-aos="fade-up">Proyektlərim</h1>
+        
+        <div class="row">
+            {% for project in projects %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+                <div class="project-card">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image">
+                    <div class="project-content">
+                        <h3 class="project-title">{{ project.title }}</h3>
+                        <p class="project-description">{{ project.short_description }}</p>
+                        
+                        <div class="project-tech">
+                            {% for tech in project.technologies.all %}
+                                <span class="tech-badge">{{ tech.name }}</span>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="{% url 'project_detail' project.id %}" class="project-link view-details">
+                                <i class="fas fa-eye me-2"></i>Ətraflı
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p class="text-muted">Hələ proyekt əlavə edilməyib.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

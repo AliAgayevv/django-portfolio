@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block title %}Haqqımda - Əli Portfolio{% endblock %}
+
+{% block extra_css %}
+<style>
+    .about-section {
+        padding: 5rem 0;
+        min-height: 80vh;
+    }
+    
+    .about-image-wrapper {
+        position: relative;
+        animation: fadeInRight 1s ease;
+    }
+    
+    .about-image {
+        width: 90%;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        transition: transform 0.3s ease;
+    }
+    
+    .about-image:hover {
+        transform: scale(1.05);
+    }
+    
+    .about-content {
+        animation: fadeInLeft 1s ease;
+    }
+    
+    .about-content h1 {
+        font-size: 3rem;
+        margin-bottom: 2rem;
+        color: var(--primary-color);
+    }
+    
+    .about-content p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        text-align: justify;
+        margin-bottom: 2rem;
+    }
+    
+    .cv-download-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 15px 40px;
+        font-size: 1.1rem;
+        border-radius: 50px;
+        color: white;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .cv-download-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        color: white;
+    }
+    
+    .social-media-links {
+        margin-top: 2rem;
+    }
+    
+    .social-media-links a {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        color: white;
+        margin-right: 15px;
+        font-size: 1.3rem;
+        transition: all 0.3s ease;
+    }
+    
+    .social-media-links a:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    
+    .social-media-links a.linkedin:hover {
+        background-color: #0077b5;
+    }
+    
+    .social-media-links a.github:hover {
+        background-color: #333;
+    }
+    
+    .social-media-links a.instagram:hover {
+        background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+    }
+    
+    .social-media-links a.medium:hover {
+        background-color: #00ab6c;
+    }
+    
+    @keyframes fadeInRight {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes fadeInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="about-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Sol tərəf - Mətn -->
+            <div class="col-lg-6 about-content" data-aos="fade-right">
+                <h1>Haqqımda</h1>
+                <p>{{ about.bio_text }}</p>
+                
+                <a href="{% url 'download_cv' %}" target="_blank" class="cv-download-btn">
+                    <i class="fas fa-download me-2"></i>CV-ni Yüklə
+                </a>
+                
+                <div class="social-media-links">
+                    {% for social in social_media %}
+                        <a href="{{ social.url }}" target="_blank" class="{{ social.platform }}" title="{{ social.get_platform_display }}">
+                            <i class="{{ social.icon_class }}"></i>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Sağ tərəf - Şəkil -->
+            <div class="col-lg-6 text-center" data-aos="fade-left">
+                <div class="about-image-wrapper">
+                    {% if about.photo %}
+                        <img src="{{ about.photo.url }}" alt="Əli" class="about-image">
+                    {% else %}
+                        <img src="https://via.placeholder.com/400" alt="Əli" class="about-image">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

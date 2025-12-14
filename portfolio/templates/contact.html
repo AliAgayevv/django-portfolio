@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block title %}Əlaqə - Əli Portfolio{% endblock %}
+
+{% block extra_css %}
+<style>
+    .contact-section {
+        padding: 5rem 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 80vh;
+    }
+    
+    .contact-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .contact-title {
+        text-align: center;
+        color: white;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .contact-subtitle {
+        text-align: center;
+        color: rgba(255,255,255,0.9);
+        margin-bottom: 3rem;
+        font-size: 1.2rem;
+    }
+    
+    .contact-form-wrapper {
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    .form-control {
+        border: 2px solid #e0e0e0;
+        padding: 12px 20px;
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+    
+    .submit-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        padding: 15px 50px;
+        font-size: 1.1rem;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        font-weight: 600;
+    }
+    
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+    
+    .contact-info {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    
+    .contact-info-item {
+        margin: 1rem 0;
+    }
+    
+    .contact-info-item i {
+        color: var(--secondary-color);
+        font-size: 1.5rem;
+        margin-right: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="contact-section">
+    <div class="container">
+        <div class="contact-container">
+            <h1 class="contact-title" data-aos="fade-up">Əlaqə</h1>
+            <p class="contact-subtitle" data-aos="fade-up" data-aos-delay="100">
+                Mənimlə əlaqə saxlamaq üçün aşağıdakı formu doldurun
+            </p>
+            
+            <div class="contact-form-wrapper" data-aos="fade-up" data-aos-delay="200">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">
+                            Adınız <span class="text-danger">*</span>
+                        </label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            <div class="text-danger">{{ form.name.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.email.id_for_label }}" class="form-label">
+                            Email <span class="text-danger">*</span>
+                        </label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="text-danger">{{ form.email.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.phone.id_for_label }}" class="form-label">
+                            Telefon Nömrəsi <span class="text-danger">*</span>
+                        </label>
+                        {{ form.phone }}
+                        {% if form.phone.errors %}
+                            <div class="text-danger">{{ form.phone.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.message.id_for_label }}" class="form-label">
+                            Mesajınız <span class="text-danger">*</span>
+                        </label>
+                        {{ form.message }}
+                        {% if form.message.errors %}
+                            <div class="text-danger">{{ form.message.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane me-2"></i>Göndər
+                    </button>
+                </form>
+            </div>
+            
+            <div class="contact-info" data-aos="fade-up" data-aos-delay="300">
+                <div class="contact-info-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>ali@example.com</span>
+                </div>
+                <div class="contact-info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Bakı, Azərbaycan</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

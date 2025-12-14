@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.title }} - Əli Portfolio{% endblock %}
+
+{% block extra_css %}
+<style>
+    .project-detail-section {
+        padding: 5rem 0;
+    }
+    
+    .project-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .project-header h1 {
+        font-size: 3rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+    }
+    
+    .project-main-image {
+        width: 100%;
+        max-height: 500px;
+        object-fit: cover;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        margin-bottom: 3rem;
+    }
+    
+    .project-info-box {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+    
+    .info-label {
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+    
+    .info-value {
+        color: #666;
+        margin-bottom: 1.5rem;
+        line-height: 1.8;
+    }
+    
+    .tech-stack-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    
+    .tech-item-badge {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 25px;
+        font-weight: 500;
+    }
+    
+    .external-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+    
+    .external-link {
+        flex: 1;
+        padding: 15px;
+        border-radius: 10px;
+        text-decoration: none;
+        text-align: center;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .github-link {
+        background-color: #333;
+        color: white;
+    }
+    
+    .github-link:hover {
+        background-color: #000;
+        color: white;
+        transform: translateY(-3px);
+    }
+    
+    .live-link {
+        background-color: #4caf50;
+        color: white;
+    }
+    
+    .live-link:hover {
+        background-color: #45a049;
+        color: white;
+        transform: translateY(-3px);
+    }
+    
+    .back-btn {
+        background-color: #f1f1f1;
+        color: #333;
+        padding: 12px 30px;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+    
+    .back-btn:hover {
+        background-color: #e0e0e0;
+        color: #333;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="project-detail-section">
+    <div class="container">
+        <div class="project-header" data-aos="fade-up">
+            <h1>{{ project.title }}</h1>
+            <p class="text-muted">
+                <i class="far fa-calendar me-2"></i>{{ project.created_date|date:"d F Y" }}
+            </p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8" data-aos="fade-right">
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-main-image">
+                
+                <div class="project-info-box">
+                    <h3 class="info-label">Proyekt Haqqında</h3>
+                    <div class="info-value">{{ project.detailed_description|linebreaks }}</div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4" data-aos="fade-left">
+                <div class="project-info-box">
+                    <h3 class="info-label">İstifadə Olunan Texnologiyalar</h3>
+                    <div class="tech-stack-list">
+                        {% for tech in project.technologies.all %}
+                            <span class="tech-item-badge">{{ tech.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="project-info-box">
+                    <h3 class="info-label">Proyekt Linkləri</h3>
+                    <div class="external-links">
+                        {% if project.github_url %}
+                            <a href="{{ project.github_url }}" target="_blank" class="external-link github-link">
+                                <i class="fab fa-github me-2"></i>GitHub
+                            </a>
+                        {% endif %}
+                        
+                        {% if project.live_url %}
+                            <a href="{{ project.live_url }}" target="_blank" class="external-link live-link">
+                                <i class="fas fa-external-link-alt me-2"></i>Canlı Demo
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <a href="{% url 'projects' %}" class="back-btn w-100 text-center mt-3">
+                    <i class="fas fa-arrow-left me-2"></i>Proyektlərə Qayıt
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

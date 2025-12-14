@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block title %}Ana Səhifə - Əli Portfolio{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        margin-top: 40px;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,106.7C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+        background-size: cover;
+    }
+    
+    .hero-content h1 {
+        font-size: 4rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        animation: fadeInUp 1s ease;
+    }
+    
+    .hero-content .subtitle {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        animation: fadeInUp 1s ease 0.2s both;
+    }
+    
+    .hero-stats {
+        display: flex;
+        gap: 3rem;
+        margin-top: 3rem;
+        animation: fadeInUp 1s ease 0.4s both;
+    }
+    
+    .stat-item {
+        text-align: center;
+    }
+    
+    .stat-number {
+        font-size: 3rem;
+        font-weight: bold;
+        display: block;
+    }
+    
+    .stat-label {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Tech Stack Section */
+    .tech-stack-section {
+        padding: 5rem 0;
+        background-color: #f8f9fa;
+    }
+    
+    .tech-item {
+        text-align: center;
+        padding: 2rem;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease;
+        margin-bottom: 2rem;
+    }
+    
+    .tech-item:hover {
+        transform: translateY(-10px);
+    }
+    
+    .tech-item i {
+        font-size: 3rem;
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+    }
+    
+    .tech-item h4 {
+        margin-bottom: 1rem;
+    }
+    
+    .progress {
+        height: 8px;
+        border-radius: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 hero-content">
+                <h1>Salam, Mən Əliyəm</h1>
+                <p class="subtitle">Full-Stack Developer & Problem Solver</p>
+                <p class="lead">C/C++ ilə başlayan səyahətim indi veb texnologiyaları ilə davam edir. Yaradıcı həllərlə problemləri həll edirəm.</p>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">{{ about.years_experience }}+</span>
+                        <span class="stat-label">İl Təcrübə</span>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <span class="stat-number">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </span>
+                        <span class="stat-label">{{ about.location }}</span>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tech Stack Section -->
+<section class="tech-stack-section">
+    <div class="container">
+        <h2 class="text-center mb-5" data-aos="fade-up">Bildiyim texnologiyalar</h2>
+        <div class="row">
+            {% for tech in tech_stacks %}
+            <div class="col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+                <div class="tech-item">
+                    {% if tech.icon %}
+                        <img src="{{ tech.icon.url }}" alt="{{ tech.name }}" style="width: 60px; height: 60px; object-fit: contain; margin-bottom: 1rem;">
+                    {% else %}
+                        <i class="fas fa-code"></i>
+                    {% endif %}
+                    <h4>{{ tech.name }}</h4>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: {{ tech.proficiency }}%" aria-valuenow="{{ tech.proficiency }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
